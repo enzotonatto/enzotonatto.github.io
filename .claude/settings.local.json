@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(python3 -c ':*)",
+      "Bash(mv \"Game Over.png\" \"gameOver.png\")",
+      "Bash(mv \"Gameplay.png\" \"gameplay.png\")",
+      "Bash(mv \"LeadBoard.png\" \"leaderboard.png\")",
+      "Bash(mv \"Menu.png\" \"menu.png\")",
+      "Bash(mv \"Pause.png\" \"pause.png\")",
+      "Bash(gh search:*)",
+      "WebSearch",
+      "Bash(plutil -p /Users/enzotonatto/Documents/Academy/SardineEscape/SardineEscape/Info.plist)",
+      "Bash(gh repo:*)",
+      "Bash(mv \"icone.jpg\" \"sardineIcon.jpg\")",
+      "Bash(mv \"Coin.png\" \"coin.png\")",
+      "Bash(mv \"Loja.png\" \"loja.png\")",
+      "Bash(mv \"abrindo a skin.png\" \"skin.png\")",
+      "Bash(mv \"game over.png\" \"gameOver.png\")",
+      "Bash(mv \"Icon1.png\" \"breakIcon.png\")",
+      "Bash(mv \"Callendar.png\" \"calendar.png\")",
+      "Bash(mv \"Challenge Done.png\" \"challengeDone.png\")",
+      "Bash(mv \"Challenge.png\" \"challenge.png\")",
+      "Bash(mv \"Reward Won.png\" \"rewardWon.png\")",
+      "WebFetch(domain:tools.ages.pucrs.br)"
+    ]
+  }
+}
