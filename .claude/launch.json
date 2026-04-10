@@ -4,7 +4,7 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["live-server", ".", "--port=5500", "--no-browser", "--entry-file=portfolio.html"],
+      "runtimeArgs": ["live-server", ".", "--port=5500", "--no-browser", "--entry-file=index.html"],
       "port": 5500
     }
   ]
