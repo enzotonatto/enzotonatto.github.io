@@ -585,6 +585,7 @@
     cursor: pointer;
     display: block;
   }
+  .screenshot-img.web { aspect-ratio: 16/10; grid-column: span 2; border-radius: 10px; object-position: top; }
   .screenshot-img.watch { aspect-ratio: 416/496; border-radius: 22%; align-self: start; }
   .screenshot-img:hover { border-color: var(--detail-accent, var(--accent)); transform: scale(1.02); }
   .detail-card {
@@ -718,40 +719,7 @@
         </div>
       </div>
       <div class="projects-carousel">
-      <div class="projects-track" id="projectsTrack">
-        <!-- Page 1 -->
-        <div class="project-item" onclick="openDetail(0)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS</span>
-        </div>
-        <div class="project-item" onclick="openDetail(1)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS Game</span>
-        </div>
-        <div class="project-item" onclick="openDetail(2)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS Game</span>
-        </div>
-        <div class="project-item" onclick="openDetail(3)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS</span>
-        </div>
-        <!-- Page 2 -->
-        <div class="project-item" onclick="openDetail(4)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS · watchOS</span>
-        </div>
-        <div class="project-item" onclick="openDetail(5)">
-          <div class="project-item-inner"></div>
-          <div class="project-overlay"></div>
-          <span class="project-tag">iOS Game</span>
-        </div>
-      </div>
+      <div class="projects-track" id="projectsTrack"></div>
       </div>
     </div>
 
@@ -809,11 +777,14 @@
 <script>
   // Project data
   const projects = [
+    { tag:'Full-stack', title:'Ask Me Anything', desc:'Real-time AMA rooms — create a room, post questions and upvote the ones that matter. Go API with WebSockets and Postgres, React front end.', tech:['Go','Chi','PostgreSQL','WebSockets','React','TypeScript'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/ama/amaIcon.svg', shotType:'web', screenshots:['assets/projects/ama/home.png','assets/projects/ama/room.png'], gradient:'linear-gradient(135deg,#1c1917,#27201a)', bar:'rgba(251,146,60,0.5)', accent:'#fb923c' },
+    { tag:'Web',        title:'Pizza Shop',      desc:'Restaurant partner dashboard — revenue and order metrics, charts, an orders table with filters and order details, plus sign-in and sign-up.', tech:['React','TypeScript','Tailwind','shadcn/ui','Recharts'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/pizzashop/pizzaShopIcon.svg', shotType:'web', screenshots:['assets/projects/pizzashop/dashboard.png','assets/projects/pizzashop/orders.png','assets/projects/pizzashop/order-details.png','assets/projects/pizzashop/sign-in.png'], gradient:'linear-gradient(135deg,#221419,#2c1820)', bar:'rgba(225,29,72,0.5)', accent:'#e11d48' },
+    { tag:'Web',        title:'Pokédex',         desc:'Classic Pokédex in the browser — search any Pokémon by name or number, or flip through them, with data and sprites from the public PokéAPI.', tech:['JavaScript','HTML','CSS','PokéAPI'], year:'2022', status:'Complete', type:'Web', logo:'assets/projects/pokedex/pokedexIcon.svg', shotType:'web', screenshots:['assets/projects/pokedex/bulbasaur.png','assets/projects/pokedex/pikachu.png','assets/projects/pokedex/charizard.png'], gradient:'linear-gradient(135deg,#16202e,#1a2738)', bar:'rgba(96,165,250,0.5)', accent:'#60a5fa' },
+    { tag:'iOS · watchOS', title:'Tiny Nuzzles', desc:'Voice messages between a child on Apple Watch and their family on iPhone — no reading required, just listen and reply with a single tap.', tech:['Swift','SwiftUI','watchOS','MVVM-C'], year:'2026', status:'Ongoing', type:'Mobile', logo:'assets/projects/tinynuzzles/tinyNuzzlesIcon.png', screenshots:['assets/projects/tinynuzzles/welcome.png','assets/projects/tinynuzzles/onboarding.png','assets/projects/tinynuzzles/login.png','assets/projects/tinynuzzles/together.png','assets/projects/tinynuzzles/games.png','assets/projects/tinynuzzles/tictactoe.png','assets/projects/tinynuzzles/memories.png','assets/projects/tinynuzzles/messages.png'], watchScreenshots:['assets/projects/tinynuzzles/watch-home.png','assets/projects/tinynuzzles/watch-games.png','assets/projects/tinynuzzles/watch-message.png'], gradient:'linear-gradient(135deg,#2a1f2a,#33223a)', bar:'rgba(236,112,170,0.5)', accent:'#ec70aa' },
     { tag:'iOS',      title:'Lavanda',        desc:'Native iOS laundry service app with a full order flow — clothing selection, address entry, order summary, payment and confirmation.', tech:['Swift','UIKit','MVVM'],        year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/lavanda/lavandaIcon.png', screenshots:['assets/projects/lavanda/screenshoot1.png','assets/projects/lavanda/screenshoot2.png','assets/projects/lavanda/screenshoot3.png','assets/projects/lavanda/screenshoot4.png','assets/projects/lavanda/screenshoot5.png','assets/projects/lavanda/screenshoot6.png','assets/projects/lavanda/screenshoot7.png','assets/projects/lavanda/screenshoot8.png'], gradient:'linear-gradient(135deg,#20222a,#22252d)', bar:'rgba(100,140,255,0.5)', accent:'#8b5cf6' },
     { tag:'iOS Game', title:'Sardine Escape', desc:'Vertical endless climber for iOS — tilt or tap to jump across platforms, collect coins, dodge sea urchins and jellyfish, and unlock skins.',  tech:['Swift','SpriteKit','SwiftUI'], year:'2026', status:'Ongoing',  type:'Game',   logo:'assets/projects/sardine/sardineIcon.jpg', screenshots:['assets/projects/sardine/inicial.png','assets/projects/sardine/jogo.png','assets/projects/sardine/coin.png','assets/projects/sardine/loja.png','assets/projects/sardine/skin.png','assets/projects/sardine/image2.png','assets/projects/sardine/gameOver.png'], gradient:'linear-gradient(135deg,#0d2a3a,#0f3347)', bar:'rgba(61,201,212,0.5)', accent:'#3dc9d4' },
     { tag:'iOS Game', title:'Shiro',          desc:'Fast-paced retro survival game for iOS — dodge snowballs, logs and wind using dashes and invincibility, with a Game Center leaderboard.',     tech:['Swift','SpriteKit','SwiftUI'], year:'2024', status:'Complete', type:'Game',   logo:'assets/projects/shiro/icone.svg',          screenshots:['assets/projects/shiro/menu.png','assets/projects/shiro/gameplay.png','assets/projects/shiro/leaderboard.png','assets/projects/shiro/pause.png','assets/projects/shiro/settings.png','assets/projects/shiro/gameOver.png'],  gradient:'linear-gradient(135deg,#1a1f2e,#1e2535)', bar:'rgba(245,180,48,0.5)',  accent:'#f5b430' },
     { tag:'iOS',      title:'Break!',         desc:'Discover a new playful challenge every 24h, complete it, earn Collectible Badges and build a Streak that makes every day feel legendary.',        tech:['Swift','SwiftUI','MVVM'],      year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/break/breakIcon.png',      screenshots:['assets/projects/break/challenge.png','assets/projects/break/challengeDone.png','assets/projects/break/takePicture.png','assets/projects/break/rewardWon.png','assets/projects/break/rewardsGallery.png','assets/projects/break/calendar.png'],                                                                                                                                                                                                                                                  gradient:'linear-gradient(135deg,#1f1a2e,#261e3a)', bar:'rgba(255,107,67,0.5)',  accent:'#ff6b43' },
-    { tag:'iOS · watchOS', title:'Tiny Nuzzles', desc:'Voice messages between a child on Apple Watch and their family on iPhone — no reading required, just listen and reply with a single tap.', tech:['Swift','SwiftUI','watchOS','MVVM-C'], year:'2026', status:'Ongoing', type:'Mobile', logo:'assets/projects/tinynuzzles/tinyNuzzlesIcon.png', screenshots:['assets/projects/tinynuzzles/welcome.png','assets/projects/tinynuzzles/onboarding.png','assets/projects/tinynuzzles/login.png','assets/projects/tinynuzzles/together.png','assets/projects/tinynuzzles/games.png','assets/projects/tinynuzzles/tictactoe.png','assets/projects/tinynuzzles/memories.png','assets/projects/tinynuzzles/messages.png'], watchScreenshots:['assets/projects/tinynuzzles/watch-home.png','assets/projects/tinynuzzles/watch-games.png','assets/projects/tinynuzzles/watch-message.png'], gradient:'linear-gradient(135deg,#2a1f2a,#33223a)', bar:'rgba(236,112,170,0.5)', accent:'#ec70aa' },
     { tag:'iOS Game',      title:'Squad',        desc:'Roguelike football draft for iOS — build your XI from top European clubs and survive a four-round knockout bracket. One loss ends the run.',  tech:['Swift','SwiftUI','Core ML','Game Center'], year:'2026', status:'Ongoing', type:'Game', logo:'assets/projects/squad/squadIcon.svg', screenshots:['assets/projects/squad/home.png','assets/projects/squad/formation.png','assets/projects/squad/draft.png','assets/projects/squad/team.png','assets/projects/squad/campaign.png','assets/projects/squad/match.png','assets/projects/squad/champion.png'], gradient:'linear-gradient(135deg,#1f2616,#28321c)', bar:'rgba(188,108,37,0.5)',  accent:'#bc6c25' },
   ];
 
@@ -838,7 +809,8 @@
     const ssRow = document.getElementById('screenshotsRow');
     const grid  = document.getElementById('project-detail').querySelector('.detail-grid');
     if (p.screenshots && p.screenshots.length) {
-      ssRow.innerHTML = p.screenshots.map(src => `<img class="screenshot-img" src="${src}" alt="Screenshot">`).join('')
+      const shotClass = p.shotType === 'web' ? 'screenshot-img web' : 'screenshot-img';
+      ssRow.innerHTML = p.screenshots.map(src => `<img class="${shotClass}" src="${src}" alt="Screenshot">`).join('')
         + (p.watchScreenshots || []).map(src => `<img class="screenshot-img watch" src="${src}" alt="Apple Watch screenshot">`).join('');
       ssEl.style.display = 'block';
       grid.style.gridTemplateColumns = '270px 1fr';
@@ -868,6 +840,12 @@
 
   // Project carousel
   const track = document.getElementById('projectsTrack');
+  track.innerHTML = projects.map((p, i) => `
+    <div class="project-item" onclick="openDetail(${i})">
+      <div class="project-item-inner"></div>
+      <div class="project-overlay"></div>
+      <span class="project-tag">${p.tag}</span>
+    </div>`).join('');
   const items = track.querySelectorAll('.project-item');
   const perView = 4;
   const gap = 10;
