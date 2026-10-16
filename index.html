@@ -669,10 +669,11 @@
   .lang-btn:not(.active) svg { opacity: 0.55; }
   .btn-talk { white-space: nowrap; }
   @media (max-width: 600px) {
-    nav { padding: 16px; }
-    .nav-actions { gap: 8px; }
-    .lang-btn { padding: 6px 8px; gap: 5px; }
-    .btn-talk { padding: 8px 14px; font-size: 13px; }
+    nav { padding: 16px; gap: 10px; }
+    .logo { font-size: 19px; }
+    .nav-actions { gap: 6px; }
+    .lang-btn { padding: 6px 7px; gap: 4px; }
+    .btn-talk { padding: 8px 12px; font-size: 13px; }
   }
 
   /* RESUME MODAL */
@@ -738,6 +739,35 @@
   }
   .resume-pages canvas { width: 100%; max-width: 820px; height: auto; border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); background: #fff; }
   .resume-status { color: var(--muted); font-size: 14px; margin: auto; }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    html, body { height: auto; }
+    body { overflow: visible; min-height: 100%; }
+    main { padding: 8px 16px 24px; overflow: visible; flex: none; }
+
+    .top-row { grid-template-columns: 1fr; flex: none; }
+    .bio-card { padding: 24px 22px; }
+    .bio-name { font-size: 38px; letter-spacing: -1.5px; }
+    .bio-memoji { width: 72px !important; height: 72px !important; }
+    .social-grid { grid-template-columns: repeat(4, 1fr); grid-template-rows: 64px; gap: 10px; }
+    .social-card svg { width: 26px; height: 26px; }
+
+    .bottom-row { flex: none; }
+    .showcase-card { padding: 20px; }
+    .projects-carousel { flex: none; height: 240px; }
+
+    #project-detail { padding: 8px 16px 24px; flex: none; }
+    .detail-grid { grid-template-columns: 1fr !important; flex: none; }
+    .detail-screenshots-panel { overflow: visible; }
+    .screenshots-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .resume-modal { padding: 12px; }
+    .resume-header { padding: 10px 10px 10px 16px; gap: 6px; }
+    .resume-action { padding: 8px 12px; }
+    .resume-action .resume-action-label { display: none; }
+    .resume-pages { padding: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -781,7 +811,7 @@
           <h1 class="bio-name">Enzo<br>Tonatto</h1>
           <p class="bio-desc" data-i18n="bio">Software developer building apps, games and the services behind them — native mobile with Swift, web with React and TypeScript, and APIs in Go and Java. Focused on clean architecture and great UX.</p>
         </div>
-        <img src="assets/memoji.png" alt="Enzo Memoji" style="width:100px; height:100px; object-fit:contain; flex-shrink:0; margin-left:12px; margin-top:4px;">
+        <img class="bio-memoji" src="assets/memoji.png" alt="Enzo Memoji" style="width:100px; height:100px; object-fit:contain; flex-shrink:0; margin-left:12px; margin-top:4px;">
       </div>
     </div>
 
@@ -901,9 +931,9 @@
   <div class="resume-dialog" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
     <div class="resume-header">
       <span class="resume-title" id="resumeTitle" data-i18n="resume">Resume</span>
-      <a class="resume-action" href="assets/Curriculo-Enzo-Tonatto.pdf" target="_blank" rel="noopener">
+      <a class="resume-action" href="assets/Curriculo-Enzo-Tonatto.pdf" target="_blank" rel="noopener" data-i18n-aria="openTab">
         <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span data-i18n="openTab">Open in new tab</span>
+        <span class="resume-action-label" data-i18n="openTab">Open in new tab</span>
       </a>
       <a class="resume-action primary" href="assets/Curriculo-Enzo-Tonatto.pdf" download="Curriculo-Enzo-Tonatto.pdf">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1064,20 +1094,26 @@
       ssEl.style.display = 'none';
       grid.style.gridTemplateColumns = '400px';
     }
-    document.querySelector('main').style.display = 'none';
     const detail = document.getElementById('project-detail');
+    const opening = detail.style.display !== 'flex';
+    if (opening) detailScrollY = window.scrollY;
+    document.querySelector('main').style.display = 'none';
     detail.style.setProperty('--detail-accent', p.accent || 'var(--accent)');
     detail.style.display = 'flex';
+    if (opening) window.scrollTo(0, 0);
     // re-trigger animation
     detail.style.animation = 'none';
     detail.offsetHeight;
     detail.style.animation = '';
   }
 
+  let detailScrollY = 0;
+
   function closeDetail() {
     currentDetail = null;
     document.querySelector('main').style.display = '';
     document.getElementById('project-detail').style.display = 'none';
+    window.scrollTo(0, detailScrollY);
   }
 
   // Nav scroll shadow
@@ -1094,10 +1130,18 @@
       <span class="project-tag">${tr(p.tag)}</span>
     </div>`).join('');
   const items = track.querySelectorAll('.project-item');
-  const perView = 4;
   const gap = 10;
+  let perView = 4;
   let current = 0;
-  const max = items.length - perView;
+  let max = 0;
+
+  // 1 card on phones, 2 on tablets, 4 on desktop
+  function updatePerView() {
+    perView = window.matchMedia('(max-width: 600px)').matches ? 1
+            : window.matchMedia('(max-width: 900px)').matches ? 2 : 4;
+    max = Math.max(0, items.length - perView);
+    current = Math.min(current, max);
+  }
 
   function getItemWidth() {
     const carousel = track.parentElement;
@@ -1125,6 +1169,7 @@
 
   // set fixed item widths on load and resize
   function initCarousel() {
+    updatePerView();
     const w = getItemWidth();
     items.forEach((el, i) => {
       el.style.flex = `0 0 ${w}px`;
