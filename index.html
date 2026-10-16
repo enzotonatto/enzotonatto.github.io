@@ -637,13 +637,136 @@
     font-weight: 700;
     white-space: nowrap;
   }
+
+  /* LANGUAGE SWITCH */
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .lang-switch {
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+  }
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn:hover { color: var(--text); }
+  .lang-btn.active { background: var(--card-hover); color: var(--text); box-shadow: inset 0 0 0 1px #3a3a3a; }
+  .lang-btn svg { width: 20px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .lang-btn:not(.active) svg { opacity: 0.55; }
+  .btn-talk { white-space: nowrap; }
+  @media (max-width: 600px) {
+    nav { padding: 16px; }
+    .nav-actions { gap: 8px; }
+    .lang-btn { padding: 6px 8px; gap: 5px; }
+    .btn-talk { padding: 8px 14px; font-size: 13px; }
+  }
+
+  /* RESUME MODAL */
+  .resume-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .resume-modal.open { display: flex; animation: fadeUp 0.3s ease both; }
+  .resume-dialog {
+    width: min(900px, 100%);
+    height: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .resume-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px 14px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .resume-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; margin-right: auto; }
+  .resume-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .resume-action:hover { background: var(--card-hover); border-color: #444; }
+  .resume-action.primary { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 500; }
+  .resume-action.primary:hover { background: #ffb820; }
+  .resume-action svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .resume-close { padding: 8px; }
+  .resume-pages {
+    flex: 1;
+    overflow-y: auto;
+    background: #1e1e1e;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .resume-pages canvas { width: 100%; max-width: 820px; height: auto; border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); background: #fff; }
+  .resume-status { color: var(--muted); font-size: 14px; margin: auto; }
 </style>
 </head>
 <body>
 
 <nav id="nav">
   <div class="logo">Enzo</div>
-  <a class="btn-talk" href="https://wa.me/5551998292204" target="_blank" rel="noopener">Let's talk</a>
+  <div class="nav-actions">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="pt" onclick="setLang('pt')" aria-label="Português (Brasil)">
+        <svg viewBox="0 0 20 14" aria-hidden="true">
+          <rect width="20" height="14" fill="#009c3b"/>
+          <path d="M10 1.6 18.2 7 10 12.4 1.8 7z" fill="#ffdf00"/>
+          <circle cx="10" cy="7" r="3.1" fill="#002776"/>
+          <path d="M7 6.4a6.5 6.5 0 0 1 6 1.2" stroke="#fff" stroke-width="0.6" fill="none"/>
+        </svg>
+        PT
+      </button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')" aria-label="English (US)">
+        <svg viewBox="0 0 20 14" aria-hidden="true">
+          <rect width="20" height="14" fill="#fff"/>
+          <path d="M0 0h20M0 2.15h20M0 4.3h20M0 6.45h20M0 8.6h20M0 10.75h20M0 12.9h20" stroke="#b22234" stroke-width="1.08" transform="translate(0 0.54)"/>
+          <rect width="8.6" height="7.55" fill="#3c3b6e"/>
+          <g fill="#fff"><circle cx="1.6" cy="1.5" r="0.45"/><circle cx="4.3" cy="1.5" r="0.45"/><circle cx="7" cy="1.5" r="0.45"/><circle cx="2.95" cy="3.75" r="0.45"/><circle cx="5.65" cy="3.75" r="0.45"/><circle cx="1.6" cy="6" r="0.45"/><circle cx="4.3" cy="6" r="0.45"/><circle cx="7" cy="6" r="0.45"/></g>
+        </svg>
+        EN
+      </button>
+    </div>
+    <a class="btn-talk" href="https://wa.me/5551998292204" target="_blank" rel="noopener" data-i18n="talk">Let's talk</a>
+  </div>
 </nav>
 
 <main>
@@ -654,9 +777,9 @@
     <div class="bio-card">
       <div style="display:flex; align-items:flex-start; justify-content:space-between;">
         <div>
-          <p class="bio-label">Software Developer</p>
+          <p class="bio-label" data-i18n="role">Software Developer</p>
           <h1 class="bio-name">Enzo<br>Tonatto</h1>
-          <p class="bio-desc">Software developer building apps, games and the services behind them — native mobile with Swift, web with React and TypeScript, and APIs in Go and Java. Focused on clean architecture and great UX.</p>
+          <p class="bio-desc" data-i18n="bio">Software developer building apps, games and the services behind them — native mobile with Swift, web with React and TypeScript, and APIs in Go and Java. Focused on clean architecture and great UX.</p>
         </div>
         <img src="assets/memoji.png" alt="Enzo Memoji" style="width:100px; height:100px; object-fit:contain; flex-shrink:0; margin-left:12px; margin-top:4px;">
       </div>
@@ -685,8 +808,8 @@
           <circle cx="4" cy="4" r="2"/>
         </svg>
       </a>
-      <!-- Resume (futuro) -->
-      <a class="social-card resume" href="assets/resume.pdf" target="_blank" rel="noopener">
+      <!-- Resume -->
+      <a class="social-card resume" href="assets/Curriculo-Enzo-Tonatto.pdf" onclick="openResume(event)" data-i18n-aria="resume">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
@@ -706,8 +829,8 @@
     <div class="showcase-card">
       <div class="card-footer" style="margin-bottom:16px;">
         <div>
-          <p class="card-label">Showcase</p>
-          <p class="card-title">Projects</p>
+          <p class="card-label" data-i18n="showcase">Showcase</p>
+          <p class="card-title" data-i18n="projects">Projects</p>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <button class="arrow-btn" id="projPrev" onclick="changePage(-1)">
@@ -730,7 +853,7 @@
   <div class="detail-back">
     <button class="detail-back-btn" onclick="closeDetail()">
       <svg viewBox="0 0 24 24"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back
+      <span data-i18n="back">Back</span>
     </button>
     <span class="detail-badge" id="detailTag"></span>
   </div>
@@ -740,62 +863,185 @@
         <div class="detail-icon-row">
           <img id="detailIcon" class="detail-icon-img" src="" alt="" style="display:none">
           <div>
-            <p class="detail-card-label" style="margin-bottom:2px">Project</p>
+            <p class="detail-card-label" style="margin-bottom:2px" data-i18n="project">Project</p>
             <h2 class="detail-title" id="detailTitle" style="margin-bottom:0"></h2>
           </div>
         </div>
         <p class="detail-desc" id="detailDesc"></p>
       </div>
       <div class="detail-card">
-        <p class="detail-card-label">Tech Stack</p>
+        <p class="detail-card-label" data-i18n="stack">Tech Stack</p>
         <div class="detail-pills" id="detailTech"></div>
       </div>
       <div class="detail-card">
         <div class="detail-meta-row">
           <div class="detail-meta-item">
-            <span class="detail-card-label">Year</span>
+            <span class="detail-card-label" data-i18n="year">Year</span>
             <span class="detail-meta-value" id="detailYear"></span>
           </div>
           <div class="detail-meta-item" style="text-align:center">
-            <span class="detail-card-label">Status</span>
+            <span class="detail-card-label" data-i18n="status">Status</span>
             <span class="detail-meta-value" id="detailStatus"></span>
           </div>
           <div class="detail-meta-item" style="text-align:right">
-            <span class="detail-card-label">Type</span>
+            <span class="detail-card-label" data-i18n="type">Type</span>
             <span class="detail-meta-value" id="detailType"></span>
           </div>
         </div>
       </div>
     </div>
     <div class="detail-screenshots-panel" id="detailScreenshots" style="display:none">
-      <p class="detail-card-label">Screenshots</p>
+      <p class="detail-card-label" data-i18n="screenshots">Screenshots</p>
       <div class="screenshots-grid" id="screenshotsRow"></div>
     </div>
   </div>
 </section>
 
+<div class="resume-modal" id="resumeModal" onclick="if (event.target === this) closeResume()">
+  <div class="resume-dialog" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
+    <div class="resume-header">
+      <span class="resume-title" id="resumeTitle" data-i18n="resume">Resume</span>
+      <a class="resume-action" href="assets/Curriculo-Enzo-Tonatto.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="openTab">Open in new tab</span>
+      </a>
+      <a class="resume-action primary" href="assets/Curriculo-Enzo-Tonatto.pdf" download="Curriculo-Enzo-Tonatto.pdf">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="download">Download</span>
+      </a>
+      <button class="resume-action resume-close" onclick="closeResume()" data-i18n-aria="close">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="resume-pages" id="resumePages"></div>
+  </div>
+</div>
+
 <script>
   // Project data
   const projects = [
-    { tag:'Full-stack', title:'Ask Me Anything', desc:'Real-time AMA rooms — create a room, post questions and upvote the ones that matter. Go API with WebSockets and Postgres, React front end.', tech:['Go','Chi','PostgreSQL','WebSockets','React','TypeScript'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/ama/amaIcon.svg', shotType:'web', screenshots:['assets/projects/ama/home.png','assets/projects/ama/room.png'], gradient:'linear-gradient(135deg,#1c1917,#27201a)', bar:'rgba(251,146,60,0.5)', accent:'#fb923c' },
-    { tag:'Web',        title:'Pizza Shop',      desc:'Restaurant partner dashboard — revenue and order metrics, charts, an orders table with filters and order details, plus sign-in and sign-up.', tech:['React','TypeScript','Tailwind','shadcn/ui','Recharts'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/pizzashop/pizzaShopIcon.svg', shotType:'web', screenshots:['assets/projects/pizzashop/dashboard.png','assets/projects/pizzashop/orders.png','assets/projects/pizzashop/order-details.png','assets/projects/pizzashop/sign-in.png'], gradient:'linear-gradient(135deg,#221419,#2c1820)', bar:'rgba(225,29,72,0.5)', accent:'#e11d48' },
-    { tag:'Web',        title:'Pokédex',         desc:'Classic Pokédex in the browser — search any Pokémon by name or number, or flip through them, with data and sprites from the public PokéAPI.', tech:['JavaScript','HTML','CSS','PokéAPI'], year:'2022', status:'Complete', type:'Web', logo:'assets/projects/pokedex/pokedexIcon.svg', shotType:'web', screenshots:['assets/projects/pokedex/bulbasaur.png','assets/projects/pokedex/pikachu.png','assets/projects/pokedex/charizard.png'], gradient:'linear-gradient(135deg,#16202e,#1a2738)', bar:'rgba(96,165,250,0.5)', accent:'#60a5fa' },
-    { tag:'iOS · watchOS', title:'Tiny Nuzzles', desc:'Voice messages between a child on Apple Watch and their family on iPhone — no reading required, just listen and reply with a single tap.', tech:['Swift','SwiftUI','watchOS','MVVM-C'], year:'2026', status:'Ongoing', type:'Mobile', logo:'assets/projects/tinynuzzles/tinyNuzzlesIcon.png', screenshots:['assets/projects/tinynuzzles/welcome.png','assets/projects/tinynuzzles/onboarding.png','assets/projects/tinynuzzles/login.png','assets/projects/tinynuzzles/together.png','assets/projects/tinynuzzles/games.png','assets/projects/tinynuzzles/tictactoe.png','assets/projects/tinynuzzles/memories.png','assets/projects/tinynuzzles/messages.png'], watchScreenshots:['assets/projects/tinynuzzles/watch-home.png','assets/projects/tinynuzzles/watch-games.png','assets/projects/tinynuzzles/watch-message.png'], gradient:'linear-gradient(135deg,#2a1f2a,#33223a)', bar:'rgba(236,112,170,0.5)', accent:'#ec70aa' },
-    { tag:'iOS',      title:'Lavanda',        desc:'Native iOS laundry service app with a full order flow — clothing selection, address entry, order summary, payment and confirmation.', tech:['Swift','UIKit','MVVM'],        year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/lavanda/lavandaIcon.png', screenshots:['assets/projects/lavanda/screenshoot1.png','assets/projects/lavanda/screenshoot2.png','assets/projects/lavanda/screenshoot3.png','assets/projects/lavanda/screenshoot4.png','assets/projects/lavanda/screenshoot5.png','assets/projects/lavanda/screenshoot6.png','assets/projects/lavanda/screenshoot7.png','assets/projects/lavanda/screenshoot8.png'], gradient:'linear-gradient(135deg,#20222a,#22252d)', bar:'rgba(100,140,255,0.5)', accent:'#8b5cf6' },
-    { tag:'iOS Game', title:'Sardine Escape', desc:'Vertical endless climber for iOS — tilt or tap to jump across platforms, collect coins, dodge sea urchins and jellyfish, and unlock skins.',  tech:['Swift','SpriteKit','SwiftUI'], year:'2026', status:'Ongoing',  type:'Game',   logo:'assets/projects/sardine/sardineIcon.jpg', screenshots:['assets/projects/sardine/inicial.png','assets/projects/sardine/jogo.png','assets/projects/sardine/coin.png','assets/projects/sardine/loja.png','assets/projects/sardine/skin.png','assets/projects/sardine/image2.png','assets/projects/sardine/gameOver.png'], gradient:'linear-gradient(135deg,#0d2a3a,#0f3347)', bar:'rgba(61,201,212,0.5)', accent:'#3dc9d4' },
-    { tag:'iOS Game', title:'Shiro',          desc:'Fast-paced retro survival game for iOS — dodge snowballs, logs and wind using dashes and invincibility, with a Game Center leaderboard.',     tech:['Swift','SpriteKit','SwiftUI'], year:'2024', status:'Complete', type:'Game',   logo:'assets/projects/shiro/icone.svg',          screenshots:['assets/projects/shiro/menu.png','assets/projects/shiro/gameplay.png','assets/projects/shiro/leaderboard.png','assets/projects/shiro/pause.png','assets/projects/shiro/settings.png','assets/projects/shiro/gameOver.png'],  gradient:'linear-gradient(135deg,#1a1f2e,#1e2535)', bar:'rgba(245,180,48,0.5)',  accent:'#f5b430' },
-    { tag:'iOS',      title:'Break!',         desc:'Discover a new playful challenge every 24h, complete it, earn Collectible Badges and build a Streak that makes every day feel legendary.',        tech:['Swift','SwiftUI','MVVM'],      year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/break/breakIcon.png',      screenshots:['assets/projects/break/challenge.png','assets/projects/break/challengeDone.png','assets/projects/break/takePicture.png','assets/projects/break/rewardWon.png','assets/projects/break/rewardsGallery.png','assets/projects/break/calendar.png'],                                                                                                                                                                                                                                                  gradient:'linear-gradient(135deg,#1f1a2e,#261e3a)', bar:'rgba(255,107,67,0.5)',  accent:'#ff6b43' },
-    { tag:'iOS Game',      title:'Squad',        desc:'Roguelike football draft for iOS — build your XI from top European clubs and survive a four-round knockout bracket. One loss ends the run.',  tech:['Swift','SwiftUI','Core ML','Game Center'], year:'2026', status:'Ongoing', type:'Game', logo:'assets/projects/squad/squadIcon.svg', screenshots:['assets/projects/squad/home.png','assets/projects/squad/formation.png','assets/projects/squad/draft.png','assets/projects/squad/team.png','assets/projects/squad/campaign.png','assets/projects/squad/match.png','assets/projects/squad/champion.png'], gradient:'linear-gradient(135deg,#1f2616,#28321c)', bar:'rgba(188,108,37,0.5)',  accent:'#bc6c25' },
+    { tag:'Full-stack', title:'Ask Me Anything', desc:{ en:'Real-time AMA rooms — create a room, post questions and upvote the ones that matter. Go API with WebSockets and Postgres, React front end.', pt:'Salas de AMA em tempo real — crie uma sala, envie perguntas e vote nas que mais importam. API em Go com WebSockets e Postgres, front-end em React.' }, tech:['Go','Chi','PostgreSQL','WebSockets','React','TypeScript'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/ama/amaIcon.svg', shotType:'web', screenshots:['assets/projects/ama/home.png','assets/projects/ama/room.png'], gradient:'linear-gradient(135deg,#1c1917,#27201a)', bar:'rgba(251,146,60,0.5)', accent:'#fb923c' },
+    { tag:'Web',        title:'Pizza Shop',      desc:{ en:'Restaurant partner dashboard — revenue and order metrics, charts, an orders table with filters and order details, plus sign-in and sign-up.', pt:'Painel para restaurantes parceiros — métricas de receita e pedidos, gráficos, tabela de pedidos com filtros e detalhes, além de login e cadastro.' }, tech:['React','TypeScript','Tailwind','shadcn/ui','Recharts'], year:'2024', status:'Complete', type:'Web', logo:'assets/projects/pizzashop/pizzaShopIcon.svg', shotType:'web', screenshots:['assets/projects/pizzashop/dashboard.png','assets/projects/pizzashop/orders.png','assets/projects/pizzashop/order-details.png','assets/projects/pizzashop/sign-in.png'], gradient:'linear-gradient(135deg,#221419,#2c1820)', bar:'rgba(225,29,72,0.5)', accent:'#e11d48' },
+    { tag:'Web',        title:'Pokédex',         desc:{ en:'Classic Pokédex in the browser — search any Pokémon by name or number, or flip through them, with data and sprites from the public PokéAPI.', pt:'Pokédex clássica no navegador — busque qualquer Pokémon por nome ou número, ou navegue entre eles, com dados e sprites da PokéAPI pública.' }, tech:['JavaScript','HTML','CSS','PokéAPI'], year:'2022', status:'Complete', type:'Web', logo:'assets/projects/pokedex/pokedexIcon.svg', shotType:'web', screenshots:['assets/projects/pokedex/bulbasaur.png','assets/projects/pokedex/pikachu.png','assets/projects/pokedex/charizard.png'], gradient:'linear-gradient(135deg,#16202e,#1a2738)', bar:'rgba(96,165,250,0.5)', accent:'#60a5fa' },
+    { tag:'iOS · watchOS', title:'Tiny Nuzzles', desc:{ en:'Voice messages between a child on Apple Watch and their family on iPhone — no reading required, just listen and reply with a single tap.', pt:'Mensagens de voz entre uma criança no Apple Watch e a família no iPhone — sem precisar ler, é só ouvir e responder com um toque.' }, tech:['Swift','SwiftUI','watchOS','MVVM-C'], year:'2026', status:'Ongoing', type:'Mobile', logo:'assets/projects/tinynuzzles/tinyNuzzlesIcon.png', screenshots:['assets/projects/tinynuzzles/welcome.png','assets/projects/tinynuzzles/onboarding.png','assets/projects/tinynuzzles/login.png','assets/projects/tinynuzzles/together.png','assets/projects/tinynuzzles/games.png','assets/projects/tinynuzzles/tictactoe.png','assets/projects/tinynuzzles/memories.png','assets/projects/tinynuzzles/messages.png'], watchScreenshots:['assets/projects/tinynuzzles/watch-home.png','assets/projects/tinynuzzles/watch-games.png','assets/projects/tinynuzzles/watch-message.png'], gradient:'linear-gradient(135deg,#2a1f2a,#33223a)', bar:'rgba(236,112,170,0.5)', accent:'#ec70aa' },
+    { tag:'iOS',      title:'Lavanda',        desc:{ en:'Native iOS laundry service app with a full order flow — clothing selection, address entry, order summary, payment and confirmation.', pt:'App iOS nativo de lavanderia com fluxo completo de pedido — escolha das peças, endereço, resumo, pagamento e confirmação.' }, tech:['Swift','UIKit','MVVM'],        year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/lavanda/lavandaIcon.png', screenshots:['assets/projects/lavanda/screenshoot1.png','assets/projects/lavanda/screenshoot2.png','assets/projects/lavanda/screenshoot3.png','assets/projects/lavanda/screenshoot4.png','assets/projects/lavanda/screenshoot5.png','assets/projects/lavanda/screenshoot6.png','assets/projects/lavanda/screenshoot7.png','assets/projects/lavanda/screenshoot8.png'], gradient:'linear-gradient(135deg,#20222a,#22252d)', bar:'rgba(100,140,255,0.5)', accent:'#8b5cf6' },
+    { tag:'iOS Game', title:'Sardine Escape', desc:{ en:'Vertical endless climber for iOS — tilt or tap to jump across platforms, collect coins, dodge sea urchins and jellyfish, and unlock skins.', pt:'Jogo vertical infinito para iOS — incline ou toque para pular entre plataformas, colete moedas, desvie de ouriços e águas-vivas e desbloqueie skins.' },  tech:['Swift','SpriteKit','SwiftUI'], year:'2026', status:'Ongoing',  type:'Game',   logo:'assets/projects/sardine/sardineIcon.jpg', screenshots:['assets/projects/sardine/inicial.png','assets/projects/sardine/jogo.png','assets/projects/sardine/coin.png','assets/projects/sardine/loja.png','assets/projects/sardine/skin.png','assets/projects/sardine/image2.png','assets/projects/sardine/gameOver.png'], gradient:'linear-gradient(135deg,#0d2a3a,#0f3347)', bar:'rgba(61,201,212,0.5)', accent:'#3dc9d4' },
+    { tag:'iOS Game', title:'Shiro',          desc:{ en:'Fast-paced retro survival game for iOS — dodge snowballs, logs and wind using dashes and invincibility, with a Game Center leaderboard.', pt:'Jogo retrô de sobrevivência para iOS — desvie de bolas de neve, troncos e vento usando dashes e invencibilidade, com ranking no Game Center.' },     tech:['Swift','SpriteKit','SwiftUI'], year:'2024', status:'Complete', type:'Game',   logo:'assets/projects/shiro/icone.svg',          screenshots:['assets/projects/shiro/menu.png','assets/projects/shiro/gameplay.png','assets/projects/shiro/leaderboard.png','assets/projects/shiro/pause.png','assets/projects/shiro/settings.png','assets/projects/shiro/gameOver.png'],  gradient:'linear-gradient(135deg,#1a1f2e,#1e2535)', bar:'rgba(245,180,48,0.5)',  accent:'#f5b430' },
+    { tag:'iOS',      title:'Break!',         desc:{ en:'Discover a new playful challenge every 24h, complete it, earn Collectible Badges and build a Streak that makes every day feel legendary.', pt:'Descubra um novo desafio divertido a cada 24h, complete-o, ganhe Insígnias Colecionáveis e construa uma sequência que deixa cada dia lendário.' },        tech:['Swift','SwiftUI','MVVM'],      year:'2025', status:'Complete', type:'Mobile', logo:'assets/projects/break/breakIcon.png',      screenshots:['assets/projects/break/challenge.png','assets/projects/break/challengeDone.png','assets/projects/break/takePicture.png','assets/projects/break/rewardWon.png','assets/projects/break/rewardsGallery.png','assets/projects/break/calendar.png'],                                                                                                                                                                                                                                                  gradient:'linear-gradient(135deg,#1f1a2e,#261e3a)', bar:'rgba(255,107,67,0.5)',  accent:'#ff6b43' },
+    { tag:'iOS Game',      title:'Squad',        desc:{ en:'Roguelike football draft for iOS — build your XI from top European clubs and survive a four-round knockout bracket. One loss ends the run.', pt:'Draft de futebol roguelike para iOS — monte seu XI com clubes das grandes ligas europeias e sobreviva a um mata-mata de quatro fases. Uma derrota encerra a run.' },  tech:['Swift','SwiftUI','Core ML','Game Center'], year:'2026', status:'Ongoing', type:'Game', logo:'assets/projects/squad/squadIcon.svg', screenshots:['assets/projects/squad/home.png','assets/projects/squad/formation.png','assets/projects/squad/draft.png','assets/projects/squad/team.png','assets/projects/squad/campaign.png','assets/projects/squad/match.png','assets/projects/squad/champion.png'], gradient:'linear-gradient(135deg,#1f2616,#28321c)', bar:'rgba(188,108,37,0.5)',  accent:'#bc6c25' },
   ];
+
+  // Language
+  const I18N = {
+    en: {
+      pageTitle: 'Enzo Tonatto — Portfolio',
+      talk: "Let's talk",
+      role: 'Software Developer',
+      bio: 'Software developer building apps, games and the services behind them — native mobile with Swift, web with React and TypeScript, and APIs in Go and Java. Focused on clean architecture and great UX.',
+      showcase: 'Showcase', projects: 'Projects',
+      back: 'Back', project: 'Project', stack: 'Tech Stack', year: 'Year', status: 'Status', type: 'Type', screenshots: 'Screenshots',
+      resume: 'Resume', openTab: 'Open in new tab', download: 'Download', close: 'Close',
+      loading: 'Loading resume…', previewError: "Couldn't load the preview. Use Download or open it in a new tab.",
+    },
+    pt: {
+      pageTitle: 'Enzo Tonatto — Portfólio',
+      talk: 'Vamos conversar',
+      role: 'Desenvolvedor de Software',
+      bio: 'Desenvolvedor de software criando apps, jogos e os serviços por trás deles — mobile nativo com Swift, web com React e TypeScript, e APIs em Go e Java. Foco em arquitetura limpa e ótima UX.',
+      showcase: 'Destaques', projects: 'Projetos',
+      back: 'Voltar', project: 'Projeto', stack: 'Tecnologias', year: 'Ano', status: 'Status', type: 'Tipo', screenshots: 'Capturas de tela',
+      resume: 'Currículo', openTab: 'Abrir em nova aba', download: 'Baixar', close: 'Fechar',
+      loading: 'Carregando currículo…', previewError: 'Não foi possível carregar a prévia. Use Baixar ou abra em uma nova aba.',
+      // Project tags, statuses and types
+      'iOS Game': 'Jogo iOS', 'Complete': 'Concluído', 'Ongoing': 'Em andamento', 'Game': 'Jogo',
+    },
+  };
+  let lang = initialLang();
+  let currentDetail = null;
+  let carouselReady = false;
+  const tr = (text) => I18N[lang][text] || text;
+
+  function setLang(next) {
+    lang = next;
+    try { localStorage.setItem('lang', next); } catch (e) {}
+    document.documentElement.lang = next === 'pt' ? 'pt-BR' : 'en-US';
+    document.title = I18N[lang].pageTitle;
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = I18N[lang][el.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', I18N[lang][el.dataset.i18nAria]); });
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === next));
+    if (carouselReady) {
+      document.querySelectorAll('.project-item .project-tag').forEach((el, i) => { el.textContent = tr(projects[i].tag); });
+      initCarousel();
+    }
+    if (currentDetail !== null) openDetail(currentDetail);
+  }
+
+  function initialLang() {
+    try { const saved = localStorage.getItem('lang'); if (saved === 'pt' || saved === 'en') return saved; } catch (e) {}
+    return (navigator.language || '').toLowerCase().startsWith('pt') ? 'pt' : 'en';
+  }
+
+  // Resume preview
+  // Pages are drawn with PDF.js so the preview works where browsers have no inline PDF viewer (mobile).
+  const RESUME_URL = 'assets/Curriculo-Enzo-Tonatto.pdf';
+  const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  let resumeRendered = false;
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const el = document.createElement('script');
+      el.src = src; el.onload = resolve; el.onerror = reject;
+      document.head.appendChild(el);
+    });
+  }
+
+  async function renderResume() {
+    const container = document.getElementById('resumePages');
+    container.innerHTML = `<p class="resume-status">${I18N[lang].loading}</p>`;
+    try {
+      if (!window.pdfjsLib) await loadScript(PDFJS + 'pdf.min.js');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js';
+      const pdf = await pdfjsLib.getDocument(RESUME_URL).promise;
+      container.innerHTML = '';
+      const scale = 2 * Math.max(window.devicePixelRatio || 1, 1);
+      for (let n = 1; n <= pdf.numPages; n++) {
+        const page = await pdf.getPage(n);
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        container.appendChild(canvas);
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }
+      resumeRendered = true;
+    } catch (e) {
+      container.innerHTML = `<p class="resume-status">${I18N[lang].previewError}</p>`;
+    }
+  }
+
+  function openResume(event) {
+    event.preventDefault();
+    document.getElementById('resumeModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (!resumeRendered) renderResume();
+  }
+
+  function closeResume() {
+    document.getElementById('resumeModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeResume(); });
 
   function openDetail(index) {
     const p = projects[index];
-    document.getElementById('detailTag').textContent   = p.tag;
+    currentDetail = index;
+    document.getElementById('detailTag').textContent   = tr(p.tag);
     document.getElementById('detailTitle').textContent = p.title;
-    document.getElementById('detailDesc').textContent   = p.desc;
+    document.getElementById('detailDesc').textContent   = p.desc[lang];
     document.getElementById('detailYear').textContent   = p.year;
-    document.getElementById('detailStatus').textContent = p.status;
-    document.getElementById('detailType').textContent   = p.type;
+    document.getElementById('detailStatus').textContent = tr(p.status);
+    document.getElementById('detailType').textContent   = tr(p.type);
     const iconEl = document.getElementById('detailIcon');
     if (p.logo) {
       iconEl.src = p.logo;
@@ -829,6 +1075,7 @@
   }
 
   function closeDetail() {
+    currentDetail = null;
     document.querySelector('main').style.display = '';
     document.getElementById('project-detail').style.display = 'none';
   }
@@ -844,7 +1091,7 @@
     <div class="project-item" onclick="openDetail(${i})">
       <div class="project-item-inner"></div>
       <div class="project-overlay"></div>
-      <span class="project-tag">${p.tag}</span>
+      <span class="project-tag">${tr(p.tag)}</span>
     </div>`).join('');
   const items = track.querySelectorAll('.project-item');
   const perView = 4;
@@ -899,14 +1146,15 @@
             <img src="${p.logo}" style="width:44px;height:44px;border-radius:12px;object-fit:cover;box-shadow:0 4px 16px rgba(0,0,0,0.6);">
             <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#ececec;line-height:1.1;letter-spacing:-0.3px;">${p.title}</span>
           </div>
-          <span style="font-size:13px;color:rgba(255,255,255,0.78);line-height:1.65;font-weight:300;flex:1;overflow:hidden;align-self:stretch;display:flex;align-items:center;">${p.desc}</span>`;
+          <span style="font-size:13px;color:rgba(255,255,255,0.78);line-height:1.65;font-weight:300;flex:1;overflow:hidden;align-self:stretch;display:flex;align-items:center;">${p.desc[lang]}</span>`;
       }
     });
     updateCarousel();
   }
 
   window.addEventListener('resize', initCarousel);
-  initCarousel();
+  carouselReady = true;
+  setLang(lang);
 </script>
 </body>
 </html>
